@@ -1,3 +1,14 @@
+
+## 공부해야할 내용
+
+- 전체적인 리액트 문법
+- component 분리 연습
+- usestate
+- state 끌어올리기
+- 변수 주고 받을 때 {} 이런거
+<br><br><br>
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
