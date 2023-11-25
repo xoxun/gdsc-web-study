@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import TodoBoard from './components/TodoBoard';
 
 const App = () => {
-  // State to manage the todo items
   const [todos, setTodos] = useState(() => {
     const storedTodos = JSON.parse(localStorage.getItem('todos')) || [];
     return storedTodos;
   });
-
-  // State to manage the input value for new todo
+  
   const [newTodo, setNewTodo] = useState('');
 
-  
-  // Effect to save todos to local storage whenever todos state changes
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
@@ -24,17 +20,9 @@ const App = () => {
 
   const addTodo = () => {
     if (newTodo.trim() !== '') {
-      if(todos.length === 0) setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
-      todos.map((todo)=> {
-        if(todo !== newTodo){
-          console.log("Sdfsdf");
-          setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
-        }
-        return 0;
-      })
+      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
       setNewTodo('');
     }
-    console.log(todos);
   };
 
   const toggleTodo = (id) => {
@@ -49,10 +37,9 @@ const App = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
-  addTodo();
   return (
     <div>
-      <h1>Todo App</h1>
+      <h1>Todo List</h1>
       <div>
         <form>
           <input
@@ -61,7 +48,7 @@ const App = () => {
             onChange={handleInputChange}
             placeholder="Enter a new todo"
           />
-          <button type="submit" onClick={addTodo} >Add Todo</button>
+          <button type="submit" onClick={addTodo}>+</button>
         </form>
       </div>
       <TodoBoard todos={todos} toggleTodo ={toggleTodo} removeTodo={removeTodo}/>
