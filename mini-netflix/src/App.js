@@ -1,31 +1,45 @@
-import Button from "./Button";
-import styles from "./App.module.css";
 import { useState,useEffect } from "react";
 
 function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
+  const [toDo, setToDo] = useState("");
+  const [toDos,setToDos] = useState([]);
 
-  const onClick = () => setValue((prev)=> prev + 1);
-  const onChange = (e) => setKeyword(e.target.value);
-  console.log("I run all the time");
-  useEffect(()=>console.log("CALL THE API..."),[]);
-  useEffect(()=>{
-    if(keyword !== "" && keyword.length >= 5){
-      console.log("Search for",keyword)
+  const onChange = (e)=>{
+    setToDo(e.target.value);
+  }
+  const onSubmit = (e)=> {
+    e.preventDefault();
+    if(toDo === "") {
+      return;
     }
-  },[keyword,counter])
+    setToDo(""); //input 초기화
+    setToDos((currentArray) =>[toDo,...currentArray]);
+    console.log(toDos);
+  }
+
+  function TodoForm(){
+
+    return(
+      <div>
+        {toDos.map(
+          (item)=>{ return (<h2>{item}</h2>);}
+          )}
+      </div>
+    )
+  }
   return (
     <div>
-      <input 
-        value={keyword}
-        onChange ={onChange}
-        type="text"
-        placeholder="Search here..." 
-      />
-      <h1 className={styles.title}>Hi!</h1>
-      {/* <Button text={"Continue"}/> */}
-      <button onClick={onClick}>{counter}</button>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="Write your to do..."
+          />
+          <button>Add To Do</button>
+      </form>
+      <TodoForm />
     </div>
   );
 }
