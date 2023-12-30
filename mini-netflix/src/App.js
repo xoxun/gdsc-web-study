@@ -1,24 +1,32 @@
 import { useState,useEffect } from "react";
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const [coins, setCoins] = useState([]);
+    const [loading,setLoading] = useState(true);
+    const [movies, setMovies] = useState([]);
+    const getMovies = async() => {
+        const json = await (
+            await fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`)
+        ).json();
+        setMovies(json.data.movies);
+        setLoading(false);
+    };
     useEffect(()=>{
-        fetch("https://api.coinpaprika.com/v1/tickers")
-        .then(response=>response.json())
-        .then((json)=>{
-            console.log(json);
-            setCoins(json);
-            setLoading(false);
-        });
+        getMovies();
     },[]);
+    console.log(movies);
   return(
     <div>
-      <h1>The Coins!</h1>
-      {loading ? <strong>Loading...</strong>:null}
-      <ul>
-        {coins.map((item)=><li>{item.name} ({item.symbol}) : {item.quotes.USD.price} USD</li>)}
-      </ul>
+      {loading ? <h1>Loading...</h1> 
+      : movies.map((item)=>(
+        <div key={movies.id}>
+            <img src={item.medium_cover_image} />
+            <h3>{item.title}</h3>
+            <p>{item.summary}</p>
+            <ul>
+                {item.genres.map((g)=> <li key={g}>{g}</li>)}
+            </ul>
+        </div>
+      ))}
     </div>);
 }
 
