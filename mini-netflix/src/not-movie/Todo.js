@@ -1,6 +1,6 @@
-import { useState,useEffect } from "react";
+import { useState, } from "react";
 
-function App() {
+function Todo() {
   const [toDo, setToDo] = useState("");
   const [toDos,setToDos] = useState([]);
 
@@ -44,4 +44,4 @@ function App() {
   );
 }
 
-export default App;
+export default Todo;
