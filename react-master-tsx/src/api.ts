@@ -16,3 +16,14 @@ export function fetchCoinTickers(coinId:string){
     response.json()
     );
 }
+
+export function fetchCoinHistory(coinId:string){
+  const endDate = Math.floor(Date.now()/1000);
+  const startDate = endDate - 60*60*24*7; //시작데이터는 현재의 일주일 전
+  return fetch(`https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`).then(response=>
+  response.json()
+  );
+  /* return fetch(`https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}?start=${startDate}&end=${endDate}`).then(response=>
+  response.json()
+  ); */
+}

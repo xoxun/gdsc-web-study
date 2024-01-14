@@ -12,6 +12,7 @@ import Chart from "./Chart";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoinInfo,fetchCoinTickers } from "../api";
+import { Helmet } from "react-helmet-async";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -146,9 +147,12 @@ function Coin() {
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
-  const {isLoading: infoLoading, data: infoData} = useQuery<InfoData>(["info",coinId], ()=> fetchCoinInfo(coinId));
   
-  const {isLoading: tickersLoading, data: tickersData} = useQuery<PriceData>(["tickers",coinId], ()=> fetchCoinTickers(coinId));
+  const {isLoading: infoLoading, data: infoData} 
+    = useQuery<InfoData>(["info",coinId], ()=> fetchCoinInfo(coinId),);
+  
+  const {isLoading: tickersLoading, data: tickersData}  
+    = useQuery<PriceData>(["tickers",coinId], ()=> fetchCoinTickers(coinId));
   /* 
   const [info, setInfo] = useState<InfoData>();
   const [priceInfo, setPriceInfo] = useState<PriceData>();
@@ -172,9 +176,9 @@ function Coin() {
   return (
     <Container>
       <Header>
-        <Title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-        </Title>
+          <Title>
+            {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+          </Title>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -190,8 +194,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(2)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -220,7 +224,7 @@ function Coin() {
               <Price />
             </Route>
             <Route path={`/:coinId/chart`}>
-              <Chart />
+              <Chart coinId={coinId}/>
             </Route>
           </Switch>
         </>

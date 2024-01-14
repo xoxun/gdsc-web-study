@@ -82,7 +82,8 @@ function Coins(){
     })();
   },[]) */
 
-    return <Container>
+    return (
+    <Container>
         <Header>
             <Title>Coin</Title>
         </Header>
@@ -103,6 +104,6 @@ function Coins(){
             
         </CoinList>
 }
-    </Container>;
+    </Container>);
 }
 export default Coins;
