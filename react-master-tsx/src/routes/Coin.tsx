@@ -232,4 +232,4 @@ function Coin() {
     </Container>
   );
 }
-export default Coin;
+export default Coin
