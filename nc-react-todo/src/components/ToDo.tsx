@@ -20,9 +20,9 @@ export default function ToDo({text, category,id}:IToDo){
     <li>
       <span>{text}</span> 
       {category !== "DOING" && 
-        <button onClick={()=>onClick("DOING")}>To Do</button>}
+        <button onClick={()=>onClick("DOING")}>Doing</button>}
       {category !== "TO_DO" && 
-        <button onClick={()=>onClick("TO_DO")}>Doing</button>}
+        <button onClick={()=>onClick("TO_DO")}>To Do</button>}
       {category !== "DONE" && 
         <button onClick={()=>onClick("DONE")}>Done</button>}
       
